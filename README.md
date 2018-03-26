@@ -453,4 +453,18 @@ echo ‘web: node ./bin/www’ > Procfile
 
 Make sure to add your `Procfile` to your repo with `git add Procfile`
 
-Now commit all your changes, and make sure they are all committed to the `master` branch.   
+Now commit all your changes, and make sure they are all committed to the `master` branch.
+
+### 6b. Set up your new app on Heroku
+
+Log in to Heroku
+
+```
+heroku login
+```
+
+Then create an app with your desired app name. In this I type
+
+```
+heroku create bubbles-api
+```
