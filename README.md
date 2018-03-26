@@ -383,6 +383,8 @@ So why did I do it? I wanted to make sure that I could get database connectivity
 
 *NEVER* wait until your project deadline to test deployment. Deploy early an often, even if your project is not complete, so you can take care of problems as they arise.
 
+If you don't have the Heroku CLI installed type `brew install heroku` and then you are good to go.
+
 ### 6a. Setup files in your repo for Heroku.
 
 Tell Heroku which version of node to use. First, find out the version of node that you are running byt typing the following on the command prompt:
@@ -457,14 +459,44 @@ Now commit all your changes, and make sure they are all committed to the `master
 
 ### 6b. Set up your new app on Heroku
 
-Log in to Heroku
+6b1. Log in to Heroku
 
 ```
 heroku login
 ```
 
-Then create an app with your desired app name. In this I type
+6b2. Then create an app with your desired app name. In this I type
 
 ```
 heroku create bubbles-api
 ```
+
+6b3. Enable support for PostgreSQL
+
+```
+heroku addons:create heroku-postgresql
+```
+
+6b4. Now add the Heroku git remote to your project:
+
+```
+heroku git:remote -a bubbles-api
+```
+
+6b5. Now push your project to Heroku
+
+```
+git push heroku master
+```
+
+6b6. Test your app. Once again, this depends on the app name but I am going to use cURL to test both REST endpoints I have so far.
+
+```
+curl -X GET https://bubbles-api.herokuapp.com
+```
+
+```
+curl -X GET https://bubbles-api.herokuapp.com/users
+```
+
+You could use `heroku open`, but since this is just a REST API that returns only JSON, testing it from the command line works just as well. You can use the REST testing tool of your choice.
