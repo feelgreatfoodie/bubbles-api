@@ -49,7 +49,7 @@ I call this one `peppermint-bubbles`. Because I am using a two server setup for 
 
 Obviously rename peppermint bubbles with your app name.
 
-## Create your repository for the backend API.
+## 1. Create your repository for the backend API.
 
 + Create your repository. Clone it to your local computer.
 
@@ -66,7 +66,7 @@ package-lock.json
 
 While it isn't bad practice *per se* to commit the lockfiles, I find they give me problems with Heroku, so I keep them out of the repo.
 
-## Create your Express app with `express-generator`
+## 2. Create your Express app with `express-generator`
 
 From the root directory of your repo, run the command:
 
@@ -140,7 +140,7 @@ Now run `npm start` again and go to:
 
 *Why did I change the port?* This is because I will run a second server on port 3000 on my local development machine that will serve the react app.
 
-## Change the default views to JSON
+## 3. Change the default views to JSON
 
 Since we are just going to be rendering our data as JSON, change to just return the JSON on the index route. So find the following in `routes/index.js`
 
@@ -160,7 +160,7 @@ router.get('/', function(req, res, next) {
 
 Of course, from here on out, make all your code compliant with your linter.
 
-## Database, Part 1: The `users` table.
+## 4. Database, Part 1: The `users` table.
 
 The most basic thing your app can have is users. This is for two reasons:
 
@@ -168,7 +168,7 @@ The most basic thing your app can have is users. This is for two reasons:
 
 + You want to track individual users so you can stalk them with creepy ML algorithms. Hey, I don't judge--in fact, I say, the creepier the better!
 
-### Schema for the `users` table
+### 4a. Schema for the `users` table
 
 1. `id`: Primary key
 2. `email`: The email address of the user which we will use as their username.
@@ -179,7 +179,7 @@ Columns 1, 2, 3 are authentication. Column 4 is for authorization.
 
 *NOTE for this first step of our database:* We aren't adding password security yet because that will require significant setup. But it is crucial--we'll be swinging back around to it later.
 
-### Create the database
+### 4b. Create the database
 
 Simple. On the command line, type:
 
@@ -197,7 +197,7 @@ createdb: could not connect to database template1: could not connect to server: 
 
 That means that your database isn't running. If you're on macOS system and installed with homebrew, type the command `pg_ctl -D /usr/local/var/postgres start` to start PostgreSQL.
 
-### Setting up `knex`
+### 4c. Setting up `knex`
 
 `knex` is a SQL query builder that lets you use relational databases with your Express app. In this case we will be using it with PostgreSQL.
 
@@ -225,7 +225,7 @@ module.exports = {
 
 Since you are probably not making the Peppermint Bubbles app, change the DB name from `pprmntbbls`. That file tells `knex` how to connect to your database.
 
-#### `knex.js`
+#### 4d. `knex.js`
 
 ```javascript
 const environment = process.env.NODE_ENV || 'development'
@@ -334,13 +334,13 @@ exports.seed = (knex, Promise) => (
 
 That made one new row in the database table! You can verify this with `psql` if you want.
 
-## Create our first `GET` route that uses a database
+## 5. Create our first `GET` route that uses a database
 
 Now that we have a list of users, let's get some way to list them. Clearly, this isn't something that we want in production, but it gives us a chance to make sure our database is connected correctly.
 
 Naturally, if we want CRUD operations on the `users` table, we should put it on the `/users/` URL path. This means that we are going to use the route in `routes/users.js`
 
-### `routes/users.js`
+### 5a. `routes/users.js`
 
 This is what the express generator created for us:
 
