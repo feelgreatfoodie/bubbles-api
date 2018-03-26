@@ -377,4 +377,80 @@ I won't explain every line because you already know how to use `knex`. The key t
 
 *WHAT WE DID THERE IS HORRIBLY INSECURE* We shouldn't let unauthenticated users see the users table.
 
-So why did I do it? I wanted to make sure that I could get database reads working early, because if there was a problem, it would be better to fix it early.
+So why did I do it? I wanted to make sure that I could get database connectivity working early, because if there was a problem, it would be better to fix it early.
+
+## 6. First test deployment to Heroku
+
+*NEVER* wait until your project deadline to test deployment. Deploy early an often, even if your project is not complete, so you can take care of problems as they arise.
+
+### 6a. Setup files in your repo for Heroku.
+
+Tell Heroku which version of node to use. First, find out the version of node that you are running byt typing the following on the command prompt:
+
+```
+node --version
+```
+
+My node version is `v9.8.0` as of the time of this writing.
+
+Add this as an engine key to `package.json`:
+
+```
+"engines": {
+  "node": "v9.8.0"
+}
+```
+
+Now you need to have a `start` script in your `package.json`, under the object in the `scripts` key:
+
+``` 
+“start”: “node ./bin/www”
+```
+
+You will also need another Heroku-specific script in `package.json`
+
+``` 
+"heroku-postbuild": "knex migrate:rollback; knex migrate:latest; knex seed:run;"
+```
+
+So your `package.json` will look like this:
+
+```json
+{
+  "name": "peppermint-bubbles-api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "heroku-postbuild": "knex migrate:rollback; knex migrate:latest; knex seed:run;"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "ejs": "~2.5.7",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "knex": "^0.14.4",
+    "morgan": "~1.9.0",
+    "pg": "^7.4.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1"
+  },
+  "engines": {
+    "node": "v9.8.0"
+  }
+}
+```
+
+Your versions of packages will probably look different though.
+
+Now you need a `Procfile` put this at the *root* of your repo. This tells Heroku how to start the application.
+
+```
+echo ‘web: node ./bin/www’ > Procfile
+```
+
+Make sure to add your `Procfile` to your repo with `git add Procfile`
+
+Now commit all your changes, and make sure they are all committed to the `master` branch.   
