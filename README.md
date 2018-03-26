@@ -500,3 +500,13 @@ curl -X GET https://bubbles-api.herokuapp.com/users
 ```
 
 You could use `heroku open`, but since this is just a REST API that returns only JSON, testing it from the command line works just as well. You can use the REST testing tool of your choice.
+
+## 7. The great split
+
+This is where I split off into making a single page app. If you are using server side rendering, go ahead and move toward that direction. *Remember your security, you will need authentication*
+
+Great! The rest of you are forging ahead into React land!
+
+## 8. Authentication and Authorization
+
+We're not ready to go make the client side app just yet. First we need username and password support.
