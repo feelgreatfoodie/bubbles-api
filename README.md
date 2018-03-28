@@ -511,6 +511,25 @@ This is where I split off into making a single page app. If you are using server
 
 Great! The rest of you are forging ahead into React land!
 
-## 8. Authentication and Authorization
+## 8. Authentication and Authorization with Username and Password
 
 We're not ready to go make the client side app just yet. First we need username and password support.
+
+For encryption and password hashing I am using [https://www.npmjs.com/package/bcryptjs](https://www.npmjs.com/package/bcryptjs). It is a 100% pure JavaScript solution for salting and encryption.
+
+I wrapped the `bcryptjs` functionality I need into `password-hashing.js`. This gives a consistent number of salt rounds.
+
+There are two authorized roles in the system: admin and non-admin. Admins can see the list of user emails in the system. Non-admins can not see the whole list. That's why `is_admin` on the `users` table is a boolean.
+
+### 8a. Seeding the initial password
+
+There needs to be an initial password in the seeds to test authentication with. *Change this is in production!!!!!*. Check the `seeds/001_users.js` file. The initial user is an admin, and the default creds are:
+
+**Username**: `hello@me.com`
+**Password**: `letmeinplease`
+
+The default password, however, is not stored as clear text. I created the script `hashme.js` to create a password hash from the only clear text argument on the command line.
+
+```
+node
+```
