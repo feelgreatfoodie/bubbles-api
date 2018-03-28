@@ -39,7 +39,11 @@ Install these `npm` packages globally
 
 Because troubleshooting is a big deal and I can't possibly think of everything that can go wrong, I don't have troubleshooting steps here.
 
-## Figure out a name for your app
+## Check the local files!
+
+While I am trying to make this README.md as complete as possible, there are some cases where I will refer you to the actual source code in the file.
+
+## 0. Figure out a name for your app
 
 I call this one `peppermint-bubbles`. Because I am using a two server setup for the deployment, this means I have two repositories for this app:
 
