@@ -546,3 +546,26 @@ knex('users').insert([{
   is_admin: true
 }])
 ```
+
+Now I can run:
+
+```
+npx knex migrate:rollback
+npx knex migrate:latest
+npx knex seed:run
+echo 'SELECT id, name, password, is_admin FROM users;' | psql bubblesapidb
+```
+
+This obtains the following output at the end from `psql`:
+
+```
+ id |     name     |                           password                           | is_admin
+----+--------------+--------------------------------------------------------------+----------
+  1 | hello@me.com | $2a$10$REbk3qsthnNR8XGTeir1J.jdVOva3aURv3Um4MVqa6L8C2G3eHpg2 | t
+(1 row)
+
+```
+
+That shows my newly hashed password in the database!
+
+Note: I used `npx` to execute `knex` out of the local node modules directory.

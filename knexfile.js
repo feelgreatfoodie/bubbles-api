@@ -1,7 +1,7 @@
 module.exports = {
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/pprmntbbls'
+    connection: 'postgres://localhost/bubblesapidb'
   },
   production: {
     client: 'pg',
