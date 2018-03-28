@@ -521,7 +521,7 @@ I wrapped the `bcryptjs` functionality I need into `password-hashing.js`. This g
 
 There are two authorized roles in the system: admin and non-admin. Admins can see the list of user emails in the system. Non-admins can not see the whole list. That's why `is_admin` on the `users` table is a boolean.
 
-### 8a. Hashing the initial password with `hashme.js`
+### 8a. Hashing the initially seeded password with `hashme.js`
 
 There needs to be an initial password in the seeds to test authentication with. *Change this is in production!!!!!*. Check the `seeds/001_users.js` file. The initial user is an admin, and the default creds are:
 
@@ -535,3 +535,14 @@ node hashme.js 'letmeinplease'
 ```
 
 The hash for `letmeinplease` is `$2a$10$REbk3qsthnNR8XGTeir1J.jdVOva3aURv3Um4MVqa6L8C2G3eHpg2` which is printed on `STDOUT` and available for you to put into the seed file.
+
+When you do this you have the relevant lines in `seeds/001_users.js`
+
+```javascript
+knex('users').insert([{
+  id: 1,
+  name: 'hello@me.com',
+  password: '$2a$10$REbk3qsthnNR8XGTeir1J.jdVOva3aURv3Um4MVqa6L8C2G3eHpg2',
+  is_admin: true
+}])
+```
