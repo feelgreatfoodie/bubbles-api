@@ -1,5 +1,11 @@
 const bcryptjs = require('bcryptjs')
 
-const hash = (password, saltRounds = 10) => bcryptjs.hashSync(password, saltRounds)
+const saltRounds = 10
 
-const
+// compare is defined the way it is to document the argument list.
+// Both function are synchronous and just return booleans.
+
+module.exports = {
+  hash: (clearText) => bcryptjs.hashSync(clearText, saltRounds),
+  compare: (clearText, hash) => bcryptjs.compareSync(clearText, hash)
+}
