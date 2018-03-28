@@ -7,6 +7,7 @@
     "heroku-postbuild": "knex migrate:rollback; knex migrate:latest; knex seed:run;"
   },
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
