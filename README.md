@@ -18,7 +18,7 @@ You will need to change these for your particular situation, but it is a good st
 
 Also: Note that I am using Node.js 9.8.0 as I write this, and I am using Javascript features all the way up to ES2017. In particular, I am using arrow functions with lots of implied `returns`. So if it looks like `return` is missing check to see if the function is a one-liner or that it is surrounded by `()`.
 
-Also, I avoid using global install of packages, so I use the `npx` command a lot, which runs scripts out of the local `node_modules` directory. If you don't like this and instead use global installs, then don't use `npx`. 
+Also, I avoid using global install of packages, so I use the `npx` command a lot, which runs scripts out of the local `node_modules` directory. If you don't like this and instead use global installs, then don't use `npx`.
 
 Here we go.
 
@@ -254,11 +254,11 @@ Now look into the file you just made. It should look something like this:
 
 ```javascript
 exports.up = function(knex, Promise) {
-  
+
 };
 
 exports.down = function(knex, Promise) {
-  
+
 };
 ```
 
@@ -295,7 +295,7 @@ What good is a table with nothing in it? Let's put some data in our table.
 
 Run this command:
 
-``` 
+```
 npx knex seed:make 001_users
 ```
 
@@ -327,8 +327,8 @@ exports.seed = (knex, Promise) => (
       knex('users').insert([
         {id: 1, name: 'hello@me.com', password: 'thereaintnopassword', is_admin: true}
       ])
+      .then(() => knex.raw("SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));"))
     ))
-    .then(() => knex.raw("SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));"))
 )
 ```
 
@@ -405,13 +405,13 @@ Add this as an engine key to `package.json`:
 
 Now you need to have a `start` script in your `package.json`, under the object in the `scripts` key:
 
-``` 
+```
 “start”: “node ./bin/www”
 ```
 
 You will also need another Heroku-specific script in `package.json`
 
-``` 
+```
 "heroku-postbuild": "knex migrate:rollback; knex migrate:latest; knex seed:run;"
 ```
 
