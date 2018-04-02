@@ -39,7 +39,11 @@ Install these `npm` packages globally
 
 Because troubleshooting is a big deal and I can't possibly think of everything that can go wrong, I don't have troubleshooting steps here.
 
-## Figure out a name for your app
+## Check the local files!
+
+While I am trying to make this README.md as complete as possible, there are some cases where I will refer you to the actual source code in the file.
+
+## 0. Figure out a name for your app
 
 I call this one `peppermint-bubbles`. Because I am using a two server setup for the deployment, this means I have two repositories for this app:
 
@@ -507,6 +511,61 @@ This is where I split off into making a single page app. If you are using server
 
 Great! The rest of you are forging ahead into React land!
 
-## 8. Authentication and Authorization
+## 8. Authentication and Authorization with Username and Password
 
 We're not ready to go make the client side app just yet. First we need username and password support.
+
+For encryption and password hashing I am using [https://www.npmjs.com/package/bcryptjs](https://www.npmjs.com/package/bcryptjs). It is a 100% pure JavaScript solution for salting and encryption.
+
+I wrapped the `bcryptjs` functionality I need into `password-hashing.js`. This gives a consistent number of salt rounds.
+
+There are two authorized roles in the system: admin and non-admin. Admins can see the list of user emails in the system. Non-admins can not see the whole list. That's why `is_admin` on the `users` table is a boolean.
+
+### 8a. Hashing the initially seeded password with `hashme.js`
+
+There needs to be an initial password in the seeds to test authentication with. *Change this is in production!!!!!*. Check the `seeds/001_users.js` file. The initial user is an admin, and the default creds are:
+
+**Username**: `hello@me.com`
+**Password**: `letmeinplease`
+
+The default password, however, is not stored as clear text. I created the script `hashme.js` to create a password hash from the only clear text argument on the command line.
+
+```
+node hashme.js 'letmeinplease'
+```
+
+The hash for `letmeinplease` is `$2a$10$REbk3qsthnNR8XGTeir1J.jdVOva3aURv3Um4MVqa6L8C2G3eHpg2` which is printed on `STDOUT` and available for you to put into the seed file.
+
+When you do this you have the relevant lines in `seeds/001_users.js`
+
+```javascript
+knex('users').insert([{
+  id: 1,
+  name: 'hello@me.com',
+  password: '$2a$10$REbk3qsthnNR8XGTeir1J.jdVOva3aURv3Um4MVqa6L8C2G3eHpg2',
+  is_admin: true
+}])
+```
+
+Now I can run:
+
+```
+npx knex migrate:rollback
+npx knex migrate:latest
+npx knex seed:run
+echo 'SELECT id, name, password, is_admin FROM users;' | psql bubblesapidb
+```
+
+This obtains the following output at the end from `psql`:
+
+```
+ id |     name     |                           password                           | is_admin
+----+--------------+--------------------------------------------------------------+----------
+  1 | hello@me.com | $2a$10$REbk3qsthnNR8XGTeir1J.jdVOva3aURv3Um4MVqa6L8C2G3eHpg2 | t
+(1 row)
+
+```
+
+That shows my newly hashed password in the database!
+
+Note: I used `npx` to execute `knex` out of the local node modules directory.
