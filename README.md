@@ -569,3 +569,16 @@ This obtains the following output at the end from `psql`:
 That shows my newly hashed password in the database!
 
 Note: I used `npx` to execute `knex` out of the local node modules directory.
+
+### 8c. Create `routes/login.js` to log people in
+
+Now we need to make a POST route to log people in. We will accept the username and password in `.json` format with the following structure:
+
+```json
+{
+  "name": "hello@me.com",
+  "password": "letmein"
+}
+```
+
+
