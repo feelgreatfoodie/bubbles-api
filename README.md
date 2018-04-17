@@ -45,13 +45,13 @@ While I am trying to make this README.md as complete as possible, there are some
 
 ## 0. Figure out a name for your app
 
-I call this one `peppermint-bubbles`. Because I am using a two server setup for the deployment, this means I have two repositories for this app:
+I call this one `bubbles`. Because I am using a two server setup for the deployment, this means I have two repositories for this app:
 
-+ `peppermint-bubbles-api`: This the backend of the application, written in Node and Express
++ `bubbles-api`: This the backend of the application, written in Node and Express
 
-+ `perppermint-bubbles-ui`: This is the front end using React and Redux and built with Webpack.
++ `bubbles-ui`: This is the front end using React and Redux and built with Webpack.
 
-Obviously rename peppermint bubbles with your app name.
+Obviously rename bubbles-api and bubbles-ui with your app name.
 
 ## 1. Create your repository for the backend API.
 
@@ -570,6 +570,16 @@ That shows my newly hashed password in the database!
 
 Note: I used `npx` to execute `knex` out of the local node modules directory.
 
+### 8b. Make a secret to sign JWTs
+
+JWTs are what we will use for logins. TO make JWTs secure, they need a secret key. On our local development machine, we will make a `.env` file to hold this key.
+
+To start, we need to install the packages for JWTs and `.env` files.
+
+```
+npm install --save jsonwebtoken dotenv
+```
+
 ### 8c. Create `routes/login.js` to log people in
 
 Now we need to make a POST route to log people in. We will accept the username and password in `.json` format with the following structure:
@@ -580,5 +590,3 @@ Now we need to make a POST route to log people in. We will accept the username a
   "password": "letmein"
 }
 ```
-
-
