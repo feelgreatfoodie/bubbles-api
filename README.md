@@ -272,7 +272,7 @@ The `exports.up` function is what creates (or alters) your table and `exports.do
 exports.up = (knex, Promise) => (
   knex.schema.createTable('users', (table) => {
     table.increments()
-    table.varchar('name', 256)
+    table.varchar('username', 256)
     table.varchar('password', 256)
     table.boolean('is_admin')
   })
@@ -328,11 +328,14 @@ Add this file to your repo. Then put something useful into it.
 exports.seed = (knex, Promise) => (
   knex('users').del()
     .then(() => (
-      knex('users').insert([
-        {id: 1, name: 'hello@me.com', password: 'thereaintnopassword', is_admin: true}
-      ])
-      .then(() => knex.raw("SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));"))
+      knex('users').insert([{
+        id: 1,
+        username: 'hello@me.com',
+        password: '$2a$10$REbk3qsthnNR8XGTeir1J.jdVOva3aURv3Um4MVqa6L8C2G3eHpg2',
+        is_admin: true
+      }])
     ))
+    .then(() => knex.raw("SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));"))
 )
 ```
 
