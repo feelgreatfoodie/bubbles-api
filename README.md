@@ -580,6 +580,22 @@ To start, we need to install the packages for JWTs and `.env` files.
 npm install --save jsonwebtoken dotenv
 ```
 
+I included the script `jwt-secret-generator.sh` to make JWT secrets. Run:
+
+```
+bash jwt-secret-generator.sh
+```
+
+Then put a key value in your `.env`:
+
+```
+JWT_SECRET=f111782d175dda59402ad273b9e8515b5b880c92361da87b0ae668b99499b68bc66048783df439093d8eec0e4dcd2b64
+```
+
+Your key won't be the same as it is here. Obviously, change this secret key if this code ever goes into production.
+
+Also, note that your `.env` isn't copied over to the Heroku automatically. We'll set it later.
+
 ### 8c. Create `routes/login.js` to log people in
 
 Now we need to make a POST route to log people in. We will accept the username and password in `.json` format with the following structure:

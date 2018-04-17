@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const knex = require('../knex')
 const bcrypt = require('bcryptjs')
+require('dotenv')
 
 router.post('/', (req, res, next) => {
   const { name, password } = req.body
