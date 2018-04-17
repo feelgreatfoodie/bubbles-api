@@ -621,4 +621,6 @@ If successful, the status will be `200` and the response will be plain text of a
 
 Take a look at `routes/login.js` in this repo to see how to make a login that returns a signed JWT key.
 
+Deploy this to Heroku!
+
 ## 9. Make the route to hold bubble counts
