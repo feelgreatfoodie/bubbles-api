@@ -144,7 +144,7 @@ Now run `npm start` again and go to:
 
 *Why did I change the port?* This is because I will run a second server on port 3000 on my local development machine that will serve the react app.
 
-## 3. Change the default views to JSON
+## 3. Change the default views to JSON and CORS
 
 Since we are just going to be rendering our data as JSON, change to just return the JSON on the index route. So find the following in `routes/index.js`
 
@@ -160,6 +160,19 @@ And change it to:
 router.get('/', function(req, res, next) {
   res.json({ hello: 'world' });
 });
+```
+
+Also in `app.js` you need to allow CORS access. Ensure the following lines are in your file, right above the `/` route.
+
+```javascript
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PATCH, DELETE')
+  next()
+})
+
+app.use('/', indexRouter)
 ```
 
 Of course, from here on out, make all your code compliant with your linter.
