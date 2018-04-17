@@ -620,3 +620,5 @@ Now we need to make a `POST` route to `/login` to log people in. We will accept 
 If successful, the status will be `200` and the response will be plain text of a JWT key. For failure, the status will be `400`.
 
 Take a look at `routes/login.js` in this repo to see how to make a login that returns a signed JWT key.
+
+## 9. Make the route to hold bubble counts
