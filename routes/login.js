@@ -22,7 +22,7 @@ router.post('/', (req, res, next) => {
             is_admin: result[0].is_admin
           }
           const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' })
-          res.status(200).send(token)
+          res.status(200).json({ token })
         }
         else {
           res.status(400).send('Bad password')
